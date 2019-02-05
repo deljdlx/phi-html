@@ -48,6 +48,7 @@ class Document extends Component
 
     public function __construct()
     {
+        parent::__construct();
 
         $this->dom = new Element('html');
         $this->dom->setDocument($this);
@@ -206,8 +207,7 @@ class Document extends Component
     }
 
 
-
-    public function compile()
+    protected function injectResources()
     {
 
         $javascriptAnchor = $this->dom->find($this->bodyEndSelector);
@@ -218,15 +218,11 @@ class Document extends Component
 
 
 
-        foreach ($this->getCSSTags() as $cssFile) {
+        foreach ($this->getCSSTags(true) as $cssFile) {
             $cssFiles[] = $cssFile;
         }
 
-
-
-
-
-        foreach ($this->getJavascriptTags() as $javascriptFile) {
+        foreach ($this->getJavascriptTags(true) as $javascriptFile) {
             $javascriptAnchor->before($javascriptFile);
         }
 
@@ -235,24 +231,12 @@ class Document extends Component
 
             if($component instanceof Component) {
 
-                foreach ($component->getCSSTags() as $cssFile) {
+                foreach ($component->getCSSTags(true) as $cssFile) {
                     $cssFiles[] = $cssFile;
                 }
-            }
 
-            if(is_string($selector)) {
-
-                if(is_string($component)) {
-                    $this->dom->find($selector)->html($component);
-                }
-                else {
-                    $this->dom->find($selector)->html($component->render());
-
-
-                    foreach ($component->getJavascriptTags() as $javascriptFile) {
-                        $javascriptFiles[] = $javascriptFile;
-                    }
-
+                foreach ($component->getJavascriptTags(true) as $javascriptFile) {
+                    $javascriptFiles[] = $javascriptFile;
                 }
             }
         }
@@ -274,14 +258,34 @@ class Document extends Component
 
 
 
-
             if(!isset($this->injectedJavascripts[$javascriptKey])) {
                 $this->injectedJavascripts[$javascriptKey] = true;
                 $javascriptAnchor->before($javascriptFile);
             }
 
         }
+    }
 
+
+    public function compile()
+    {
+
+
+        foreach ($this->components as $selector => $component) {
+
+
+            if(is_string($selector)) {
+
+                if(is_string($component)) {
+                    $this->dom->find($selector)->html($component);
+                }
+                else {
+                    $this->dom->find($selector)->html($component->render());
+                }
+            }
+        }
+
+        $this->injectResources();
 
         $this->dom->body->append($this->endBody);
 

@@ -13,11 +13,18 @@ class CSSFile extends Element
     protected $key;
 
 
-    public function __construct($href)
+    public function __construct($href, array $extraAttributes = null)
     {
         parent::__construct('link', true);
         $this->setAttribute('href', $href);
         $this->setAttribute('rel', "stylesheet");
+
+
+        if(is_array($extraAttributes)) {
+            foreach ($extraAttributes as $key => $value) {
+                $this->setAttribute($key, $value);
+            }
+        }
     }
 
     public function getSource()

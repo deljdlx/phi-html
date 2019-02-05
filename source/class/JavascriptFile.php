@@ -13,11 +13,17 @@ class JavascriptFile extends Element
     protected $key;
 
 
-    public function __construct($src)
+    public function __construct($src, array $extraAttributes = null)
     {
         parent::__construct('script');
         $this->setAttribute('src', $src);
         $this->setAttribute('type', "text/javascript");
+
+        if(is_array($extraAttributes)) {
+            foreach ($extraAttributes as $key => $value) {
+                $this->setAttribute($key, $value);
+            }
+        }
     }
 
 

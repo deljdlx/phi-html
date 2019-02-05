@@ -9,6 +9,11 @@ use Phi\Template\PHPTemplate;
 class Component extends PHPTemplate
 {
 
+    const RESOURCE_PRIORITY_DEFAULT = 2048;
+    const RESOURCE_PRIORITY_REQUIRE = 4096;
+
+    //const RESOURCE_PRIORITY_REQUIRE = 4096;
+
 
     protected $javascriptFiles = [];
     protected $cssFiles = [];
@@ -35,16 +40,24 @@ class Component extends PHPTemplate
 
 
 
-    public function addCSSFile($css)
+    public function addCSSFile($css, $priority = null)
     {
+
+
+        if($priority === null) {
+            $priority = static::RESOURCE_PRIORITY_DEFAULT;
+        }
+        if(!array_key_exists($priority, $this->cssFiles)) {
+            $this->cssFiles[$priority] = [];
+        }
+
 
         if(!$css instanceof CSSFile) {
             $css = new CSSFile($css);
-            $this->cssFiles[] = $css;
         }
-        else {
-            $this->cssFiles[] = $css;
-        }
+
+        $this->cssFiles[$priority][] = $css;
+
         return $css;
 
     }
@@ -61,28 +74,62 @@ class Component extends PHPTemplate
     }
 
 
-    public function addJavascriptFile($javascript)
+    public function addJavascriptFile($javascript, $priority = null)
     {
+
         if(!$javascript instanceof JavascriptFile) {
             $javascript = new JavascriptFile($javascript);
         }
 
-        $this->javascriptFiles[] = $javascript;
+
+        if($priority === null) {
+            $priority = static::RESOURCE_PRIORITY_DEFAULT;
+        }
+        if(!array_key_exists($priority, $this->javascriptFiles)) {
+            $this->javascriptFiles[$priority] = [];
+        }
+
+        $this->javascriptFiles[$priority][] = $javascript;
+
+
         return $javascript;
     }
 
 
-    public function getCSSTags()
+    public function getCSSTags($flatten = false)
     {
-        return $this->cssFiles;
+        if(!$flatten) {
+            return $this->cssFiles;
+        }
+        else {
+            $flatten = [];
+            $sorted = $this->cssFiles;
+            krsort($sorted);
+            foreach ($sorted as $cluster) {
+                $flatten = array_merge($flatten, $cluster);
+            }
+            return $flatten;
+        }
+
     }
 
     /**
      * @return JavascriptFile[]
      */
-    public function getJavascriptTags()
+    public function getJavascriptTags($flatten = false)
     {
-        return $this->javascriptFiles;
+        if(!$flatten) {
+            return $this->javascriptFiles;
+        }
+        else {
+            $flatten = [];
+            $sorted = $this->javascriptFiles;
+            krsort($sorted);
+            foreach ($sorted as $cluster) {
+                $flatten = array_merge($flatten, $cluster);
+            }
+            return $flatten;
+        }
     }
 
 

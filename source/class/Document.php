@@ -171,11 +171,31 @@ class Document extends Component
         return $this;
     }
 
+    public function clear($selector)
+    {
+        if(array_key_exists($selector, $this->components)) {
+            $this->components[$selector] = null;
+        }
+
+        return $this;
+    }
+
     public function registerComponent($component, $selector = null, $name = null)
     {
 
         if($selector) {
-            $this->components[$selector] = $component;
+            if(isset($this->components[$selector])) {
+                if(!$this->components[$selector] instanceof  ComponentCollection) {
+                    $currentComponent = $this->components[$selector];
+                    $this->components[$selector] = new ComponentCollection();
+                    $this->components[$selector]->addComponent($currentComponent);
+                }
+                $this->components[$selector]->addComponent($component);
+            }
+            else {
+                $this->components[$selector] = $component;
+            }
+
         }
         else {
             $this->components[] = $component;
@@ -288,11 +308,18 @@ class Document extends Component
         $this->injectResources();
 
         $this->dom->body->append($this->endBody);
+    }
+
+
+    protected function build()
+    {
 
     }
 
+
     public function render()
     {
+        $this->build();
         $this->compile();
         $buffer = $this->dom->render();
         return $this->getDoctype()."\n".$buffer;

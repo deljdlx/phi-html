@@ -157,13 +157,19 @@ class Component extends PHPTemplate
     }
 
 
+    public function build()
+    {
+        if($this->template) {
+            $this->dom->html(parent::render());
+        }
+    }
+
+
 
     public function render()
     {
 
-        if($this->template) {
-            $this->dom->html(parent::render());
-        }
+        $this->build();
         $buffer = $this->dom->render();
 
 

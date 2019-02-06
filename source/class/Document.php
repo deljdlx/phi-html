@@ -311,11 +311,6 @@ class Document extends Component
     }
 
 
-    protected function build()
-    {
-
-    }
-
 
     public function render()
     {

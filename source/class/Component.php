@@ -10,7 +10,9 @@ class Component extends PHPTemplate
 {
 
     const RESOURCE_PRIORITY_DEFAULT = 2048;
-    const RESOURCE_PRIORITY_REQUIRE = 4096;
+    const RESOURCE_PRIORITY_INCLUDE = 4096;
+    const RESOURCE_PRIORITY_REQUIRE = 8192;
+
 
     //const RESOURCE_PRIORITY_REQUIRE = 4096;
 

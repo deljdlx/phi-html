@@ -13,6 +13,9 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
 
     protected $isAtomic = false;
 
+    /**
+     * @var Document
+     */
     protected $document;
 
     /**
@@ -196,6 +199,11 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
     }
 
 
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
     public function addChild($child, $index = null)
     {
         if(is_array($child)) {
@@ -214,9 +222,15 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
         }
         else {
             array_splice($this->children, $index, 0, array($child));
-            foreach ($this->children as $key => $child) {
-                $child->setKey($key);
-            }
+            $this->rebuild();
+        }
+        return $this;
+    }
+
+    public function rebuild()
+    {
+        foreach ($this->children as $key => $child) {
+            $child->setKey($key);
         }
         return $this;
     }
@@ -230,6 +244,9 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
     {
         $element = new Element('fragment');
         $element->html($string, true);
+        if($this->document) {
+            $element->setDocument($this->document);
+        }
         return $element->children;
 
     }
@@ -361,6 +378,11 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
         else {
             $element = new Element($elementName);
         }
+
+        if($this->document) {
+            $element->setDocument($this->document);
+        }
+
         return $element;
     }
 
@@ -408,11 +430,28 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
             $this->parseHTML($element);
         }
         else if($element instanceof Element) {
+            if($element->getParent()) {
+                $element->detach();
+            }
             $this->addChild($element);
         }
-
         return $this;
     }
+
+
+    public function detach()
+    {
+        $this->parent->removeElementByIndex($this->getKey());
+        return $this;
+    }
+
+    public function removeElementByIndex($index)
+    {
+        unset($this->children[$index]);
+        $this->rebuild();
+        return $this;
+    }
+
 
 
     public function before($element)

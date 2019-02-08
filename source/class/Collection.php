@@ -22,6 +22,12 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
     protected $attributes = [];
 
 
+    /**
+     * @var Document
+     */
+    protected $document;
+
+
     public function __construct($name, $element = null)
     {
         $this->id = uniqid();
@@ -29,6 +35,12 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
         if($element) {
             $this->addElement($element);
         }
+    }
+
+    public function setDocument(Document $document = null)
+    {
+        $this->document = $document;
+        return $this;
     }
 
 
@@ -60,6 +72,7 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
         if(!isset($this->childrenByTag[$propertyName])) {
 
             $this->childrenByTag[$propertyName] = new Collection($propertyName);
+            $this->childrenByTag[$propertyName]->setDocument($this->document);
 
             foreach ($this->elements as $element) {
                 $collection = $element->getCollection($propertyName);
@@ -105,6 +118,8 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
     public function find($query)
     {
         $resultCollection = new Collection($query);
+        $resultCollection->setDocument($this->document);
+
         foreach ($this->elements as $element) {
             $collection = $element->find($query);
             $resultCollection->mergeCollection($collection);
@@ -143,6 +158,18 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
         }
 
 
+        return $this;
+    }
+
+
+    public function getElements()
+    {
+        return $this->elements;
+    }
+
+    public function removeElementByKey($key)
+    {
+        unset($this->elements[$key]);
         return $this;
     }
 

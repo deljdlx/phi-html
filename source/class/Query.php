@@ -25,19 +25,44 @@ class Query
     public function find()
     {
 
-        if(preg_match('`^\.([A-z\-]+)$`', $this->selector, $data)) {
+
+        $attributeSelector = false;
+        $selector = $this->selector;
+        if(preg_match('`(.*?)\[(.+?)\]`', $this->selector, $data)) {
+            $attributeSelector = $data[2];
+            $selector = $data[1];
+        }
+
+
+        if(preg_match('`^\.([A-z\-]+)$`', $selector, $data)) {
             $className = $data[1];
-            return $this->getByClassName($className);
+            $this->getByClassName($className);
         }
 
-        if(preg_match('`^#([A-z\-]+)$`', $this->selector, $data)) {
+        if(preg_match('`^#([A-z\-]+)$`', $selector, $data)) {
             $id = $data[1];
-            return $this->getById($id);
+            $this->getById($id);
         }
 
-        if(preg_match('`^([A-z]+)$`', $this->selector, $data)) {
+        if(preg_match('`^([A-z]+)$`', $selector, $data)) {
             $tagName = $data[1];
-            return $this->getByTagName($tagName);
+            $this->getByTagName($tagName);
+        }
+
+        if($attributeSelector) {
+            $attributeData = explode('=', $attributeSelector);
+            $attributeName = $attributeData[0];
+            $attributeValue = $attributeData[1];
+
+            $keyToRemove = [];
+            foreach ($this->collection->getElements() as $key => $item) {
+                if((string) $item->getAttribute($attributeName)->getValue() != $attributeValue) {
+                    $keyToRemove[] = $key;
+                }
+            }
+            foreach ($keyToRemove as $key) {
+                $this->collection->removeElementByKey($key);
+            }
         }
 
 

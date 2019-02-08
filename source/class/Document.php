@@ -79,7 +79,10 @@ class Document extends Component
     public function setHTML($html, $parse = false)
     {
         //$this->dom->html($this->normalizeHTML($html), $parse);
+
         $this->dom = new Element('html');
+        $this->dom->setDocument($this);
+
         $this->html = &$this->dom;
         $this->dom->html($this->normalizeHTML($html), $parse);
 
@@ -262,6 +265,7 @@ class Document extends Component
         }
 
 
+        $currentCSSCollection = $this->dom->head->find('link[rel=stylesheet]');
 
         foreach ($cssFiles as $cssFile) {
             $cssKey = $cssFile->getKey();
@@ -270,7 +274,13 @@ class Document extends Component
                 $this->injectedCSS[$cssKey] = true;
                 $this->dom->head->append($cssFile->render()."\n");
             }
+        }
 
+        if($currentCSSCollection->length()) {
+            foreach ($currentCSSCollection->getElements() as $link) {
+                $this->dom->head->append($link);
+                $this->dom->head->append("\n");
+            }
         }
 
         foreach ($javascriptFiles as $javascriptFile) {

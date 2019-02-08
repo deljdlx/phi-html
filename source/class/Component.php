@@ -28,12 +28,29 @@ class Component extends PHPTemplate
     }
 
 
+    /**
+     * @return Element
+     */
+    public function getDom()
+    {
+        return $this->dom;
+    }
+
+    /**
+     * @param $query
+     * @param Collection|null $collection
+     * @return Collection
+     */
     public function find($query, Collection $collection = null)
     {
         return $this->dom->find($query, $collection);
     }
 
 
+    /**
+     * @param Element $element
+     * @return $this
+     */
     public function addChild(Element $element)
     {
         $this->dom->addChild($element);

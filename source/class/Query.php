@@ -108,7 +108,7 @@ class Query
             $elementClassName = $element->getAttribute('class')->getValue();
 
             if($elementClassName) {
-                if(preg_match('`\b'.$className.'\b`', $elementClassName)) {
+                if(preg_match('`(^| )'.$className.'( |$)`', $elementClassName)) {
                     $this->collection->addElement($element);
                 }
 

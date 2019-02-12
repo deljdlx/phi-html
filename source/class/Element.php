@@ -680,4 +680,28 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
     }
 
 
+    public function toArray()
+    {
+        $attributes = [];
+        foreach ($this->getAttributes() as $name => $attribute) {
+            $attributes[$name] = (string) $attribute->getValue();
+        }
+
+
+        $data = array(
+            $this->name => array(
+                'attributes' => $attributes,
+                'children' => array()
+            )
+        );
+
+        foreach ($this->children as $key => $child) {
+            $data[$this->name]['children'][$key] = $child->toArray();
+        }
+
+        return $data;
+
+    }
+
+
 }

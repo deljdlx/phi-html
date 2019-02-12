@@ -179,7 +179,7 @@ class Component extends PHPTemplate
     public function build()
     {
         if($this->template) {
-            $this->dom->html(parent::render());
+            $this->dom->html(parent::render(), true);
         }
     }
 

@@ -71,6 +71,10 @@ class Query
     }
 
 
+    /**
+     * @param $tagName
+     * @return Collection
+     */
     public function getByTagName($tagName)
     {
         foreach ($this->element->getChildren() as $element) {
@@ -84,7 +88,10 @@ class Query
     }
 
 
-
+    /**
+     * @param $id
+     * @return Collection
+     */
     public function getById($id)
     {
         foreach ($this->element->getChildren() as $element) {
@@ -100,6 +107,10 @@ class Query
     }
 
 
+    /**
+     * @param $className
+     * @return Collection
+     */
     public function getByClassName($className)
     {
 

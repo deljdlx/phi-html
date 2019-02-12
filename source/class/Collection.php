@@ -2,6 +2,8 @@
 
 namespace Phi\HTML;
 
+use Phi\Core\Exception;
+
 class Collection implements \ArrayAccess, \JsonSerializable, \Countable
 {
 
@@ -146,7 +148,7 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
             }
         }
         else {
-            die('probleme');
+            throw new Exception('fix this (tryed to set another property than innerHTML)');
         }
     }
 
@@ -157,9 +159,19 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
             $element->html($content, $parse);
         }
 
-
         return $this;
     }
+
+    public function setAttribute($attributeName, $value)
+    {
+        foreach ($this->elements as $element) {
+            $element->setAttribute($attributeName, $value);
+        }
+        return $this;
+    }
+
+
+
 
 
     public function getElements()

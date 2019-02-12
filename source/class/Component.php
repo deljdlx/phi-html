@@ -21,6 +21,8 @@ class Component extends PHPTemplate
     protected $cssFiles = [];
     protected $dom;
 
+    protected $builded = false;
+
 
     public function __construct($tag = '')
     {
@@ -178,9 +180,12 @@ class Component extends PHPTemplate
 
     public function build()
     {
+
         if($this->template) {
             $this->dom->html(parent::render(), true);
         }
+        $this->builded = true;
+        return $this;
     }
 
 
@@ -188,7 +193,10 @@ class Component extends PHPTemplate
     public function render()
     {
 
-        $this->build();
+        if(!$this->builded) {
+            $this->build();
+        }
+
         $buffer = $this->dom->render();
 
 

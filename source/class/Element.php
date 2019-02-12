@@ -345,30 +345,34 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
     }
 
 
-
-
+    /**
+     * @param $selector
+     * @param Collection|null $collection
+     * @return Collection
+     */
     public function find($selector, Collection $collection = null)
     {
         $query = new Query($this, $selector, $collection);
 
         $value = $query->find();
 
-
-
         return $value;
     }
 
 
+    /**
+     * @return Element[]
+     */
     public function getChildren()
     {
         return $this->children;
     }
 
 
-
-
-
-
+    /**
+     * @param $elementName
+     * @return Element
+     */
     public function createElement($elementName)
     {
         $className = '\Phi\HTML\Element\\'.ucfirst($elementName);

@@ -6,6 +6,15 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
 {
 
 
+    /**
+     * @var ElementFactory
+     */
+    protected static $staticFactory;
+
+    /**
+     * @var ElementFactory
+     */
+    protected $factory;
 
     protected $key = 0;
     protected $name;
@@ -63,6 +72,11 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
 
     public function __construct($name, $atomic = false)
     {
+        if(static::$staticFactory === null) {
+            static::$staticFactory = ElementFactory::getInstance();
+        }
+
+        $this->factory = static::$staticFactory;
 
         $this->css = new Style();
         $this->name = $name;
@@ -118,7 +132,6 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
         return $this;
     }
 
-
     public function __get($propertyName)
     {
 
@@ -132,6 +145,8 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
             $collection = new Collection($propertyName);
 
             $element = $this->createElement($propertyName);
+
+
             $collection->addElement($element);
 
             $this->childrenByTag[$propertyName] = $collection;
@@ -139,8 +154,9 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
         }
 
         return $this->childrenByTag[$propertyName];
-
     }
+
+
 
 
     public function getCollection($propertyName) {
@@ -381,13 +397,9 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
      */
     public function createElement($elementName)
     {
-        $className = '\Phi\HTML\Element\\'.ucfirst($elementName);
-        if(class_exists($className)) {
-            $element = new $className($elementName);
-        }
-        else {
-            $element = new Element($elementName);
-        }
+
+        $element = $this->factory->getElement($elementName);
+
 
         if($this->document) {
             $element->setDocument($this->document);

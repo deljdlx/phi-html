@@ -32,8 +32,6 @@ class Table extends Element
         $this->thead = new Thead();
         $this->thead->setItems($headers);
 
-
-
         $this->append($this->thead);
 
         return $this;

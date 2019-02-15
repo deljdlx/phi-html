@@ -71,14 +71,19 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
 
     public function __get($propertyName)
     {
+
+
         if(!isset($this->childrenByTag[$propertyName])) {
 
             $this->childrenByTag[$propertyName] = new Collection($propertyName);
             $this->childrenByTag[$propertyName]->setDocument($this->document);
 
             foreach ($this->elements as $element) {
-                $element->__get($propertyName);
+                if(!isset($element->$propertyName)) {
+                    $element->__get($propertyName);
+                }
             }
+
 
 
             foreach ($this->elements as $element) {
@@ -87,7 +92,42 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
             }
         }
 
+
         return $this->childrenByTag[$propertyName];
+    }
+
+
+
+
+    public function __call($methodName, $parameters)
+    {
+
+        $returnValues = [];
+
+        foreach ($this->elements as $element) {
+            if(method_exists($element, $methodName)) {
+                $returnValue = call_user_func_array(array(
+                    $element, $methodName
+                ), $parameters);
+
+                if($returnValue) {
+                    $returnValues[] = $returnValue;
+                }
+            }
+        }
+        if(empty($returnValues)) {
+            return $this;
+        }
+        else {
+            if(count($returnValues) === 1) {
+                return reset($returnValues);
+            }
+            else {
+                return $returnValues;
+            }
+
+        }
+
     }
 
 
@@ -226,6 +266,7 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
     }
     public function offsetGet ($offset )
     {
+
         return $this->elements[$offset];
     }
 

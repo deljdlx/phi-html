@@ -35,6 +35,9 @@ class Component extends PHPTemplate
      */
     public function getDom()
     {
+        if(!$this->builded) {
+            $this->build();
+        }
         return $this->dom;
     }
 

@@ -77,10 +77,16 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
             $this->childrenByTag[$propertyName]->setDocument($this->document);
 
             foreach ($this->elements as $element) {
+                $element->__get($propertyName);
+            }
+
+
+            foreach ($this->elements as $element) {
                 $collection = $element->getCollection($propertyName);
                 $this->childrenByTag[$propertyName]->mergeCollection($collection);
             }
         }
+
         return $this->childrenByTag[$propertyName];
     }
 
@@ -91,15 +97,7 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
             $element->registerToCollection($this);
             $this->addElement($element);
         }
-
-        /*
-        foreach ($collection->attributes as $attibuteName => $attributeValue) {
-            $this->attributes[$attibuteName] = $attributeValue;
-        }
-        */
-
         return $this;
-
     }
 
 
@@ -250,6 +248,15 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
         if(isset($this->elements[$offset])) {
             unset($this->elements[$offset]);
         }
+    }
+
+
+    public function addClass($class)
+    {
+        foreach ($this->elements as $element) {
+            $element->addClass($class);
+        }
+        return $this;
     }
 
 

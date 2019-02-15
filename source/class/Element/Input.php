@@ -14,4 +14,17 @@ class Input extends Element
     }
 
 
+    public function setValue($value)
+    {
+        $this->setAttribute('value', htmlspecialchars($value));
+        return $this;
+    }
+
+    public function setName($name)
+    {
+        $this->setAttribute('name', htmlspecialchars($name));
+        return $this;
+    }
+
+
 }

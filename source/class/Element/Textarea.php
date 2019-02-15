@@ -14,4 +14,16 @@ class Textarea extends Element
     }
 
 
+    public function setValue($value)
+    {
+        $this->html(htmlentities($value));
+        return $this;
+    }
+
+    public function setName($name)
+    {
+        $this->setAttribute('name', htmlspecialchars($name));
+        return $this;
+    }
+
 }

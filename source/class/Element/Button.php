@@ -5,12 +5,20 @@ namespace Phi\HTML\Element;
 
 use Phi\HTML\Element;
 
-class Button extends Element
+class Button extends Input
 {
 
     public function __construct()
     {
-        parent::__construct('button');
+        Element::__construct('button');
+        $this->setAttribute('type', 'button');
+    }
+
+
+    public function setLabel($label)
+    {
+        $this->html($label);
+        return $this;
     }
 
 

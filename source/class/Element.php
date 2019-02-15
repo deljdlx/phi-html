@@ -39,6 +39,9 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
     protected $css;
 
 
+    protected $cssClasses = [];
+
+
 
 
     /**
@@ -127,13 +130,16 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
         if(!isset($this->childrenByTag[$propertyName])) {
 
             $collection = new Collection($propertyName);
+
             $element = $this->createElement($propertyName);
             $collection->addElement($element);
 
             $this->childrenByTag[$propertyName] = $collection;
+            $this->children[] = $element;
         }
 
         return $this->childrenByTag[$propertyName];
+
     }
 
 
@@ -555,6 +561,7 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
             }
         }
 
+
         if($css = $this->css->render().$this->getAttribute('style')->getValue()) {
             $buffer .=' style="'.$css.'"';
         }
@@ -562,6 +569,15 @@ class Element implements \ArrayAccess, \JsonSerializable, \Countable
 
         return trim($buffer);
     }
+
+    public function addClass($class)
+    {
+        $this->cssClasses[] = $class;
+        $this->cssClasses = array_unique($this->cssClasses);
+        $this->setAttribute('class', implode(' ', $this->cssClasses));
+        return $this;
+    }
+
 
 
 

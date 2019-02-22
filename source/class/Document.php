@@ -265,7 +265,7 @@ class Document extends Component
         }
 
 
-        $currentCSSCollection = $this->dom->head->find('link[rel=stylesheet]');
+
 
         foreach ($cssFiles as $cssFile) {
             $cssKey = $cssFile->getKey();
@@ -276,6 +276,8 @@ class Document extends Component
             }
         }
 
+        //keep priority
+        $currentCSSCollection = $this->dom->head->find('link[rel=stylesheet]');
         if($currentCSSCollection->length()) {
             foreach ($currentCSSCollection->getElements() as $link) {
                 $this->dom->head->append($link);

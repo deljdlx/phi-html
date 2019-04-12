@@ -190,14 +190,20 @@ class Collection implements \ArrayAccess, \JsonSerializable, \Countable
         }
     }
 
-    public function html($content, $parse = false)
+    public function html($content = null, $parse = false)
     {
-
         foreach ($this->elements as $element) {
             $element->html($content, $parse);
         }
 
         return $this;
+    }
+
+    /**
+     * @return Element
+     */
+    public function first() {
+        return $this->elements[0];
     }
 
     public function setAttribute($attributeName, $value)

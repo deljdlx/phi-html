@@ -83,6 +83,11 @@ class Page extends Document
         return $this;
     }
 
+    public function getMainContent()
+    {
+        return  $this->find('#'.$this->getMainContainerId())->first();
+    }
+
 
     public function getEndPageId()
     {

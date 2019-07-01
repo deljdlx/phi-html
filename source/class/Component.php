@@ -5,9 +5,10 @@ namespace Phi\HTML;
 
 
 use Phi\HTML\Traits\HasAsset;
-use Phi\Template\PHPTemplate;
+use Phi\Template\Template;
 
-class Component extends PHPTemplate
+
+class Component
 {
 
     const RESOURCE_PRIORITY_DEFAULT = 2048;
@@ -20,8 +21,11 @@ class Component extends PHPTemplate
     //const RESOURCE_PRIORITY_REQUIRE = 4096;
 
 
+    /** @var  Template */
+    private $template;
 
-    protected $dom;
+
+    public $dom;
 
     protected $builded = false;
 
@@ -29,6 +33,12 @@ class Component extends PHPTemplate
     public function __construct($tag = '')
     {
         $this->dom = new Element($tag);
+    }
+
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
+        return $this;
     }
 
 
@@ -95,7 +105,7 @@ class Component extends PHPTemplate
     {
 
         if($this->template) {
-            $this->dom->html(parent::render(), true);
+            $this->dom->html($this->template->render(), true);
         }
         $this->builded = true;
         return $this;

@@ -22,6 +22,7 @@ class Document extends Component
 
 
 
+
     public function __construct()
     {
         parent::__construct();
@@ -73,6 +74,34 @@ class Document extends Component
     }
 
 
+
+
+
+
+    public function getCustomElement($name, $simpleXML)
+    {
+
+        if(isset($this->customTags[$name]))
+        {
+
+            if(class_exists($this->customTags[$name])) {
+                /**
+                 * @var CustomTag $element
+                 */
+                $element = new $this->customTags[$name];
+                $element->setDocument($this);
+
+
+                foreach ($simpleXML->parameter as $parameter) {
+                    $parameterName = (string) $parameter['name'];
+                    $element->setParameter($parameterName, $parameter);
+                }
+
+                return $element;
+            }
+        }
+        return false;
+    }
 
 
 

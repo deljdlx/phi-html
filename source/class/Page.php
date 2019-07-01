@@ -18,6 +18,15 @@ class Page extends Document
     const DEFAULT_MAIN_CONTAINER_ID = 'phi-main-container';
 
 
+    /**
+     * @var Document;
+     */
+    public $document;
+
+    /** @var Element  */
+    public $dom;
+
+
 
     protected $bodyEndSelector = '#phi-html-body-end';
 
@@ -32,17 +41,9 @@ class Page extends Document
     protected $injectedJavascripts = array();
 
 
-    /**
-     * @var Element
-     */
-    public $dom;
-
-    protected $html;
 
     protected $components = [];
     protected $componentsByName= [];
-
-    protected $customTags = [];
 
 
     public $endBody = '';
@@ -50,9 +51,11 @@ class Page extends Document
 
     public function __construct()
     {
-        parent::__construct();
 
-        $this->dom->innerHTML='
+        $this->document = new Document();
+        $this->dom = $this->document->dom;
+
+        $this->dom->html('
             <head>
                 <meta charset="utf-8" />
                 <title>Phi page</title>
@@ -61,7 +64,8 @@ class Page extends Document
                 <div id="'.$this->getMainContainerId().'"></div>
                 <a id="'.$this->getEndPageId().'"></a>
             </body>
-        ';
+        ', true);
+
     }
 
 
@@ -247,34 +251,6 @@ class Page extends Document
         }
     }
 
-
-
-
-
-    public function getCustomElement($name, $simpleXML)
-    {
-
-        if(isset($this->customTags[$name]))
-        {
-
-            if(class_exists($this->customTags[$name])) {
-                /**
-                 * @var CustomTag $element
-                 */
-                $element = new $this->customTags[$name];
-                $element->setDocument($this);
-
-
-                foreach ($simpleXML->parameter as $parameter) {
-                    $parameterName = (string) $parameter['name'];
-                    $element->setParameter($parameterName, $parameter);
-                }
-
-                return $element;
-            }
-        }
-        return false;
-    }
 
 
 

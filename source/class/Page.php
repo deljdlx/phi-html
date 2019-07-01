@@ -7,7 +7,7 @@ use Phi\Template\Traits\MustacheTemplate;
 use Phi\Core\Exception;
 
 
-class Page extends Document
+class Page
 {
 
     use MustacheTemplate;
@@ -92,7 +92,7 @@ class Page extends Document
 
     public function getMainContent()
     {
-        return  $this->find('#'.$this->getMainContainerId())->first();
+        return  $this->document->find('#'.$this->getMainContainerId())->first();
     }
 
 
@@ -194,11 +194,11 @@ class Page extends Document
 
 
 
-        foreach ($this->getCSSTags(true) as $cssFile) {
+        foreach ($this->document->getCSSTags(true) as $cssFile) {
             $cssFiles[] = $cssFile;
         }
 
-        foreach ($this->getJavascriptTags(true) as $javascriptFile) {
+        foreach ($this->document->getJavascriptTags(true) as $javascriptFile) {
             $javascriptAnchor->before($javascriptFile);
         }
 
@@ -281,7 +281,6 @@ class Page extends Document
 
     public function render()
     {
-        $this->build();
         $this->compile();
         $buffer = $this->dom->render();
         return $this->getDoctype()."\n".$buffer;

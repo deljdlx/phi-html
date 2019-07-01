@@ -7,7 +7,7 @@ require(__DIR__.'/_autoload.php');
 $document = new \Phi\HTML\Document();
 
 
-$document->dom->html('<body style="font-family: sans-serif; background-color: #CCC">hello world</body>');
+$document->dom->body->html('<h2>hello world document</h2>', true);
 
 
 echo $document->render();

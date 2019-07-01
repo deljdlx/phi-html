@@ -80,6 +80,9 @@ class Page extends Document
     public function setMainContent($content)
     {
         $this->registerComponent($content, '#'.$this->getMainContainerId());
+
+
+
         return $this;
     }
 

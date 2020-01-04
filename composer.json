@@ -1,0 +1,27 @@
+{
+	"name": "elbiniou/phi-html",
+	"description": "Phi HTML",
+
+	"repositories": [
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-template"},
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-core"},
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-traits"},
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-filesystem"}
+	],
+	"require":
+	{
+		"elbiniou/phi-core": "0.1.0",
+		"elbiniou/phi-template": "0.1.0"
+	},
+
+	"autoload": {
+		"psr-4": {
+			"Phi\\Event\\": "source/class"
+		},
+		"files": [
+
+		]
+	}
+}
+
+

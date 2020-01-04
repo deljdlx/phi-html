@@ -4,7 +4,7 @@
 namespace Phi\HTML;
 
 
-use Phi\Core\Renderer;
+use Phi\Template\Interfaces\Renderer;
 
 class ComponentCollection extends Component
 {
@@ -42,7 +42,7 @@ class ComponentCollection extends Component
             if(is_string($component)) {
                 $buffer .= $component;
             }
-            else if($component instanceof \Phi\Core\Interfaces\Renderer) {
+            else if($component instanceof  Renderer) {
                 $buffer .= $component->render();
             }
         }

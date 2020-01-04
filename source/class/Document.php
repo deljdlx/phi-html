@@ -3,7 +3,6 @@
 namespace Phi\HTML;
 
 use Phi\Template\Traits\MustacheTemplate;
-use Phi\Core\Exception;
 
 
 class Document extends Component

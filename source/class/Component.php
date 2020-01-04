@@ -22,7 +22,8 @@ class Component
 
 
     /** @var  Template */
-    private $template;
+    protected $template;
+
 
 
     public $dom;
@@ -30,16 +31,42 @@ class Component
     protected $builded = false;
 
 
-    public function __construct($tag = '')
+    public function __construct()
     {
-        $this->dom = new Element($tag);
+        $this->template = new Template();
+        $this->dom = new Element('');
     }
 
     public function setTemplate(Template $template)
     {
+
+        $template->setVariables(
+            $this->template->getVariables()
+        );
+
         $this->template = $template;
         return $this;
     }
+
+    public function loadTemplate($templateFile)
+    {
+        $this->template->loadFile($templateFile);
+        return $this;
+    }
+
+    /**
+     * @return Template
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param $path
+     * @return $this
+     */
+
 
 
     /**
@@ -104,9 +131,7 @@ class Component
     public function build()
     {
 
-        if($this->template) {
-            $this->dom->html($this->template->render(), true);
-        }
+        $this->dom->html($this->template->render(), true);
         $this->builded = true;
         return $this;
     }

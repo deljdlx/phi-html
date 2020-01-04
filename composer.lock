@@ -1,0 +1,139 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "9cf657115df3397da173c4e07c6bb396",
+    "packages": [
+        {
+            "name": "elbiniou/phi-core",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ElBiniou/phi-core.git",
+                "reference": "51f186b3c3469e8eaec6f5cb7ae0fd7c4d01c165"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ElBiniou/phi-core/zipball/51f186b3c3469e8eaec6f5cb7ae0fd7c4d01c165",
+                "reference": "51f186b3c3469e8eaec6f5cb7ae0fd7c4d01c165",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phi\\Core\\": "source/class"
+                }
+            },
+            "description": "A framework for people who don't like frameworks",
+            "support": {
+                "source": "https://github.com/ElBiniou/phi-core/tree/0.1.0",
+                "issues": "https://github.com/ElBiniou/phi-core/issues"
+            },
+            "time": "2020-01-04T13:17:20+00:00"
+        },
+        {
+            "name": "elbiniou/phi-filesystem",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ElBiniou/phi-filesystem.git",
+                "reference": "a05a3b8e3e7b94cebb05d4c202b38d7859dd0dce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ElBiniou/phi-filesystem/zipball/a05a3b8e3e7b94cebb05d4c202b38d7859dd0dce",
+                "reference": "a05a3b8e3e7b94cebb05d4c202b38d7859dd0dce",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phi\\Event\\": "source/class"
+                },
+                "files": []
+            },
+            "description": "Phi FileSystem",
+            "support": {
+                "source": "https://github.com/ElBiniou/phi-filesystem/tree/0.1.0",
+                "issues": "https://github.com/ElBiniou/phi-filesystem/issues"
+            },
+            "time": "2020-01-04T13:29:41+00:00"
+        },
+        {
+            "name": "elbiniou/phi-template",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ElBiniou/phi-template.git",
+                "reference": "5a4662d0d009784ef10a79626a0a0ce9e254291d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ElBiniou/phi-template/zipball/5a4662d0d009784ef10a79626a0a0ce9e254291d",
+                "reference": "5a4662d0d009784ef10a79626a0a0ce9e254291d",
+                "shasum": ""
+            },
+            "require": {
+                "elbiniou/phi-core": "0.1.0",
+                "elbiniou/phi-filesystem": "0.1.0",
+                "elbiniou/phi-traits": "0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phi\\Template\\": "source/class"
+                },
+                "files": [
+                    "source/mustache/src/Mustache/Autoloader.php"
+                ]
+            },
+            "description": "Phi template",
+            "support": {
+                "source": "https://github.com/ElBiniou/phi-template/tree/0.1.0",
+                "issues": "https://github.com/ElBiniou/phi-template/issues"
+            },
+            "time": "2020-01-04T13:40:24+00:00"
+        },
+        {
+            "name": "elbiniou/phi-traits",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ElBiniou/phi-traits.git",
+                "reference": "34836889c861795ad07e55244a59238549d7f20f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ElBiniou/phi-traits/zipball/34836889c861795ad07e55244a59238549d7f20f",
+                "reference": "34836889c861795ad07e55244a59238549d7f20f",
+                "shasum": ""
+            },
+            "require": {
+                "elbiniou/phi-core": "0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phi\\Traits\\": "source/class"
+                },
+                "files": []
+            },
+            "description": "Usefull traits",
+            "support": {
+                "source": "https://github.com/ElBiniou/phi-traits/tree/0.1.0",
+                "issues": "https://github.com/ElBiniou/phi-traits/issues"
+            },
+            "time": "2020-01-04T13:39:50+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

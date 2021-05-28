@@ -1,6 +1,7 @@
 <?php
 
 
+require_once __DIR__ . '/functions.php';
 
 spl_autoload_register(function ($calledClassName) {
 
@@ -18,9 +19,8 @@ spl_autoload_register(function ($calledClassName) {
             include($definitionClass);
         }
     }
-
-
-
 });
+
+
 
 

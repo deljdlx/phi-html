@@ -3,10 +3,10 @@
 	"description": "Phi HTML",
 
 	"repositories": [
-		{"type": "vcs", "url": "https://github.com/deljlx/phi-template"},
-		{"type": "vcs", "url": "https://github.com/deljlx/phi-core"},
-		{"type": "vcs", "url": "https://github.com/deljlx/phi-traits"},
-		{"type": "vcs", "url": "https://github.com/deljlx/phi-filesystem"}
+		{"type": "vcs", "url": "git@github.com:deljdlx/phi-template"},
+		{"type": "vcs", "url": "git@github.com:deljdlx/phi-core"},
+		{"type": "vcs", "url": "git@github.com:deljdlx/phi-traits"},
+		{"type": "vcs", "url": "git@github.com:deljdlx/phi-filesystem"}
 	],
 	"require":
 	{

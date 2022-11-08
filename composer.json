@@ -1,17 +1,17 @@
 {
-	"name": "elbiniou/phi-html",
+	"name": "deljlx/phi-html",
 	"description": "Phi HTML",
 
 	"repositories": [
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-template"},
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-core"},
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-traits"},
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-filesystem"}
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-template"},
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-core"},
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-traits"},
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-filesystem"}
 	],
 	"require":
 	{
-		"elbiniou/phi-core": "0.1.0",
-		"elbiniou/phi-template": "0.1.0"
+		"deljlx/phi-core": "0.1.0",
+		"deljlx/phi-template": "0.1.0"
 	},
 
 	"autoload": {
